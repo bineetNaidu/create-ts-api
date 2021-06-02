@@ -1,13 +1,13 @@
-# create-ts-express-api
+# create-ts-api
 
 A utility command to set up TypeScript, NodeJS, Express API project.
 
 ## Installation
 
-Install create-ts-express-api with npm
+Install create-ts-api with npm
 
 ```bash
-  npx create-ts-express-api my-project
+  npx create-ts-api my-project
   cd my-project
 ```
 
@@ -30,7 +30,7 @@ Please adhere to this project's `code of conduct`.
 
 ## Roadmap
 
-- See out project plans. [here](https://github.com/bineetNaidu/create-ts-express-api/projects/1)
+- See out project plans. [here](https://github.com/bineetNaidu/create-ts-api/projects/1)
 
 ## License
 
