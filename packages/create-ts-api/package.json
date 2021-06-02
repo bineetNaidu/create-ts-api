@@ -1,0 +1,24 @@
+{
+  "name": "create-ts-api",
+  "version": "1.0.0",
+  "description": "A utility command to setup nodejs TS api",
+  "main": "index.js",
+  "bin": {
+    "create-ts-api": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "templates/main",
+    "src/index.js"
+  ],
+  "keywords": [],
+  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu-io.web.app/)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "fs-extra": "^10.0.0"
+  }
+}
