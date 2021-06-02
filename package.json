@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "create-ts-express-api",
+  "version": "1.0.0",
+  "description": "A utility command to set up TypeScript, NodeJS, Express API",
+   "workspaces": {
+    "packages": ["packages/*"]
+  },
+  "keywords": ["Node", "express", "restapi", "typescript"],
+  "author": "BineetNaidu (https://bineetnaidu.github.io/)",
+  "license": "MIT"
+}
