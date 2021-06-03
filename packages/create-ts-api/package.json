@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "A utility command to setup nodejs TS api",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bineetNaidu/create-ts-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bineetNaidu/create-ts-api/issues"
+  },
+  "homepage": "https://github.com/bineetNaidu/create-ts-api#readme",
   "bin": {
     "create-ts-api": "./src/index.js"
   },
@@ -14,7 +22,7 @@
     "src/index.js"
   ],
   "keywords": [],
-  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu-io.web.app/)",
+  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu.github.io/)",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.1",
