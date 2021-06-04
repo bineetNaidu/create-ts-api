@@ -16,6 +16,8 @@ const program = new commander.Command(packageJson.name)
   .action((name) => {
     projectName = name;
   })
+  .option('--mongodb', 'a api template w/ mongodb')
+  .option('--psql', 'a api template w/ postgresql')
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
@@ -25,7 +27,9 @@ if (typeof projectName === 'undefined') {
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-ts-api')}`);
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('my-typescript-api')}`
+  );
   process.exit(1);
 }
 
@@ -36,7 +40,24 @@ if (fs.existsSync(projectDestination)) {
   process.exit(1);
 }
 
-fs.copySync(path.join(__dirname, '..', '../templates/main'), projectName);
+const checkTemplateOptions = () => {
+  const options = program.opts();
+  let template = '../templates/main';
+
+  if (options.mongodb) {
+    template = '../templates/mongo';
+    console.log(chalk.blue(`>> ${projectName} is using our mongodb template`));
+  }
+
+  if (options.psql) {
+    template = '../templates/psql';
+    console.log(chalk.blue(`>> ${projectName} is using our psql template`));
+  }
+
+  return template;
+};
+
+fs.copySync(path.join(__dirname, '..', checkTemplateOptions()), projectName);
 
 function shouldUseYarn() {
   try {
