@@ -1,5 +1,5 @@
 {
-  "name": "@create-ts-api/main-template",
+  "name": "@create-ts-api/psql-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -27,6 +27,9 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^4.6.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.34"
   }
 }

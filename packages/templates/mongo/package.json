@@ -1,5 +1,5 @@
 {
-  "name": "@create-ts-api/main-template",
+  "name": "@create-ts-api/mongodb-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^4.6.0",
+    "mongoose": "^5.12.12",
     "morgan": "^1.10.0"
   }
 }
