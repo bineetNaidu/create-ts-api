@@ -1,6 +1,6 @@
 # create-ts-api
 
-A utility command to set up TypeScript, NodeJS, Express API project.
+A utility command to set up TypeScript, NodeJS, Express/GraphQL API project.
 
 ## Installation
 
@@ -9,6 +9,9 @@ Install create-ts-api with npm
 ```bash
   npx create-ts-api my-project
   cd my-project
+
+  # check out other template option
+  npx create-ts-api -h
 ```
 
 ## Contributing
