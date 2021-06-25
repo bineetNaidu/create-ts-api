@@ -1,6 +1,6 @@
 {
   "name": "create-ts-api",
-  "version": "1.5.1",
+  "version": "1.5.4",
   "description": "A utility command to setup nodejs TS api",
   "main": "index.js",
   "repository": {
@@ -15,14 +15,15 @@
     "create-ts-api": "./src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "cp -R ../templates .",
+    "postpublish": "rm -rf templates"
   },
   "files": [
-    "../templates/main",
-    "../templates/mongo",
-    "../templates/psql",
-    "../templates/gql",
-    "../templates/gql-psql",
+    "templates/main",
+    "templates/mongo",
+    "templates/psql",
+    "templates/gql",
+    "templates/gql-psql",
     "src/index.js"
   ],
   "keywords": [],

@@ -44,29 +44,29 @@ if (fs.existsSync(projectDestination)) {
 
 const checkTemplateOptions = () => {
   const options = program.opts();
-  let template = '../templates/main';
+  let template = 'templates/main';
 
   if (options.mongodb) {
-    template = '../templates/mongo';
+    template = 'templates/mongo';
     console.log(
       chalk.blue(`>> ${projectName} is using our RestAPI + mongodb template`)
     );
   }
 
   if (options.psql) {
-    template = '../templates/psql';
+    template = 'templates/psql';
     console.log(
       chalk.blue(`>> ${projectName} is using our RestAPI + PostgreSQL template`)
     );
   }
 
   if (options.gql) {
-    template = '../templates/gql';
+    template = 'templates/gql';
     console.log(chalk.blue(`>> ${projectName} is using our GraphQL template`));
   }
 
   if (options.gqlPg) {
-    template = '../templates/gql-psql';
+    template = 'templates/gql-psql';
     console.log(
       chalk.blue(`>> ${projectName} is using our GraphQL + PostgreSQL template`)
     );
