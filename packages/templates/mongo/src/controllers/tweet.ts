@@ -4,7 +4,7 @@ import { Tweet } from '../models/Tweet';
 export const createTweet = async (req: Request, res: Response) => {
   const { username, body } = req.body;
   const tweet = await Tweet.build({ body, username }).save();
-  res.json({
+  res.status(201).json({
     data: tweet,
     created: !!tweet,
     success: true,
