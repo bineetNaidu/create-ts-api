@@ -24,6 +24,7 @@
     "templates/psql",
     "templates/gql",
     "templates/gql-psql",
+    "templates/gql-mongo",
     "src/index.js"
   ],
   "keywords": [],

@@ -20,6 +20,7 @@ const program = new commander.Command(packageJson.name)
   .option('--psql', 'a api template w/ postgresql')
   .option('--gql', 'a GraphQL api template')
   .option('--gql-pg', 'a GraphQL api + PostgreSQL template')
+  .option('--gql-mongodb', 'a GraphQL api + MongoDB template')
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
@@ -69,6 +70,13 @@ const checkTemplateOptions = () => {
     template = 'templates/gql-psql';
     console.log(
       chalk.blue(`>> ${projectName} is using our GraphQL + PostgreSQL template`)
+    );
+  }
+
+  if(options.gqlMongodb){
+    template = 'templates/gql-mongo'
+     console.log(
+      chalk.blue(`>> ${projectName} is using our GraphQL + MongoDB template`)
     );
   }
 
