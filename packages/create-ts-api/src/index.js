@@ -73,9 +73,9 @@ const checkTemplateOptions = () => {
     );
   }
 
-  if(options.gqlMongodb){
-    template = 'templates/gql-mongo'
-     console.log(
+  if (options.gqlMongodb) {
+    template = 'templates/gql-mongo';
+    console.log(
       chalk.blue(`>> ${projectName} is using our GraphQL + MongoDB template`)
     );
   }
