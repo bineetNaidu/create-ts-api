@@ -1,89 +1,82 @@
 #!/usr/bin/env node
 
-const commander = require('commander');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
-const packageJson = require('../package.json');
 const fs = require('fs-extra');
 const path = require('path');
+const inquirer = require('inquirer');
+const simpleGit = require('simple-git');
 
-let projectName;
-
-const program = new commander.Command(packageJson.name)
-  .version(packageJson.version)
-  .arguments('<project-directory>')
-  .usage(`${chalk.green('<project-directory>')}`)
-  .action((name) => {
-    projectName = name;
+inquirer
+  .prompt([
+    {
+      name: 'projectName',
+      message: 'Name your API project?',
+      default: 'api',
+    },
+    {
+      name: 'projectDescription',
+      message: 'Describe your API project?',
+      default: 'A description of your API project',
+    },
+    {
+      name: 'willUseGit',
+      message: 'Do you want to use Git?',
+      type: 'confirm',
+      default: true,
+    },
+    {
+      name: 'template',
+      message: 'Which API templates would you like to use?',
+      type: 'list',
+      choices: [
+        {
+          name: 'Main',
+          value: 'templates/main',
+          checked: true,
+        },
+        {
+          name: 'Main + MongoDb',
+          value: 'templates/mongo',
+        },
+        {
+          name: 'Main + PostgreSQL',
+          value: 'templates/psql',
+        },
+        {
+          name: 'GraphQL',
+          value: 'templates/gql',
+        },
+        {
+          name: 'GraphQL + PostgreSQL',
+          value: 'templates/gql-psql',
+        },
+        {
+          name: 'GraphQL + MongoDb',
+          value: 'templates/gql-mongo',
+        },
+      ],
+    },
+  ])
+  .then((answers) => {
+    createApp(
+      answers.projectName,
+      answers.projectDescription,
+      answers.template,
+      answers.willUseGit
+    ).catch((error) => {
+      console.log(chalk.red(error.message));
+    });
   })
-  .option('--mongodb', 'a api template w/ mongodb')
-  .option('--psql', 'a api template w/ postgresql')
-  .option('--gql', 'a GraphQL api template')
-  .option('--gql-pg', 'a GraphQL api + PostgreSQL template')
-  .option('--gql-mongodb', 'a GraphQL api + MongoDB template')
-  .parse(process.argv);
-
-if (typeof projectName === 'undefined') {
-  console.error('Please specify the project directory:');
-  console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
-  );
-  console.log();
-  console.log('For example:');
-  console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('my-typescript-api')}`
-  );
-  process.exit(1);
-}
-
-const projectDestination = path.join(process.cwd(), projectName);
-
-if (fs.existsSync(projectDestination)) {
-  console.log(`The directory ${chalk.green(projectName)} already exists.`);
-  process.exit(1);
-}
-
-const checkTemplateOptions = () => {
-  const options = program.opts();
-  let template = 'templates/main';
-
-  if (options.mongodb) {
-    template = 'templates/mongo';
-    console.log(
-      chalk.blue(`>> ${projectName} is using our RestAPI + mongodb template`)
-    );
-  }
-
-  if (options.psql) {
-    template = 'templates/psql';
-    console.log(
-      chalk.blue(`>> ${projectName} is using our RestAPI + PostgreSQL template`)
-    );
-  }
-
-  if (options.gql) {
-    template = 'templates/gql';
-    console.log(chalk.blue(`>> ${projectName} is using our GraphQL template`));
-  }
-
-  if (options.gqlPg) {
-    template = 'templates/gql-psql';
-    console.log(
-      chalk.blue(`>> ${projectName} is using our GraphQL + PostgreSQL template`)
-    );
-  }
-
-  if (options.gqlMongodb) {
-    template = 'templates/gql-mongo';
-    console.log(
-      chalk.blue(`>> ${projectName} is using our GraphQL + MongoDB template`)
-    );
-  }
-
-  return template;
-};
-
-fs.copySync(path.join(__dirname, '..', checkTemplateOptions()), projectName);
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+      console.error(chalk.red('Error: ' + error.message));
+    } else {
+      // Something else went wrong
+      console.log(chalk.red(error.message));
+    }
+  });
 
 function shouldUseYarn() {
   try {
@@ -94,18 +87,85 @@ function shouldUseYarn() {
   }
 }
 
-process.chdir(projectDestination);
+async function createApp(
+  projectName,
+  projectDescription,
+  template,
+  willUseGit
+) {
+  const projectDestination = path.join(process.cwd(), projectName);
 
-fs.writeFileSync(
-  '.gitignore',
-  `node_modules
-dist
-.env
-database.sqlite`
-);
+  if (fs.existsSync(projectDestination)) {
+    console.log(
+      chalk.red(`?? The directory ${chalk.green(projectName)} already exists.`)
+    );
+    process.exit(1);
+  }
+  console.log();
+  console.log(
+    `${chalk.green('🚀 Welcome to the')} ${chalk.blue(
+      'create-ts-api'
+    )} ${chalk.green('CLI')}`
+  );
+  console.log(`${chalk.green('🎉 This will create a new API project')}`);
+  console.log(`${chalk.green('✨ in the current directory')}`);
+  console.log(`${chalk.green('❇️  with the name')} ${chalk.blue(projectName)}`);
+  console.log(
+    `${chalk.green('🔥 using the')} ${chalk.blue(template)} ${chalk.green(
+      'template'
+    )}`
+  );
+  console.log();
 
-if (shouldUseYarn()) {
-  execSync('yarn install', { stdio: [0, 1, 2] });
-} else {
-  execSync('npm install', { stdio: [0, 1, 2] });
+  fs.mkdirsSync(projectDestination);
+
+  fs.copySync(path.join(__dirname, '..', template), projectName);
+
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.join(projectName, 'package.json'))
+  );
+  packageJson.name = projectName;
+  packageJson.description = projectDescription;
+  packageJson.author = '<Your Name>';
+  fs.writeFileSync(
+    path.join(projectName, 'package.json'),
+    JSON.stringify(packageJson, null, 2)
+  );
+
+  process.chdir(projectDestination);
+  console.log(`${chalk.green('🍺  Installing dependencies')}`);
+
+  if (shouldUseYarn()) {
+    execSync('yarn install', { stdio: [0, 1, 2] });
+  } else {
+    execSync('npm install', { stdio: [0, 1, 2] });
+  }
+
+  if (willUseGit) {
+    const git = simpleGit({
+      baseDir: process.chdir(projectDestination),
+      binary: 'git',
+      maxConcurrentProcesses: 6,
+    });
+
+    console.log();
+    console.log(chalk.green('🔄 Initializing git...'));
+    await git.init();
+    await git.add('.');
+    await git.commit(':tada: bootstrapped from create-ts-api');
+    console.log(chalk.green('✅ Initialized git!'));
+  }
+
+  const runCmd = shouldUseYarn() ? 'yarn dev:ts' : 'npm run dev:ts';
+
+  console.log('');
+  console.log(`${chalk.green('🎉 Your new API project is ready!')}`);
+  console.log(
+    `${chalk.green('🔥 Run')} ${chalk.blue(runCmd)} ${chalk.green(
+      'in the'
+    )} ${chalk.bgBlue(projectName)} ${chalk.green('directory')}`
+  );
+  console.log(`${chalk.green('📖 Check the README for available commands')}`);
+  console.log(`${chalk.green('🚀 Happy Coding')}`);
+  console.log();
 }
