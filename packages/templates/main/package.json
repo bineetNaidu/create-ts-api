@@ -9,7 +9,8 @@
     "dev": "nodemon dist/index.js",
     "dev:ts": "nodemon src/index.ts",
     "test:watch": "jest --watchAll --no-cache",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "jest": {
     "preset": "ts-jest",
