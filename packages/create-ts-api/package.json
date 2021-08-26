@@ -1,6 +1,6 @@
 {
   "name": "create-ts-api",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "A utility command to setup nodejs TS api",
   "main": "index.js",
   "repository": {
