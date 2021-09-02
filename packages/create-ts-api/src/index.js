@@ -147,6 +147,16 @@ async function createApp(
       binary: 'git',
       maxConcurrentProcesses: 6,
     });
+    // create a .gitignore file and add node_modules to it
+    fs.writeFileSync(
+      path.join(projectDestination, '.gitignore'),
+      `
+dist
+build
+node_modules
+.env
+			`
+    );
 
     console.log();
     console.log(chalk.green('🔄 Initializing git...'));
