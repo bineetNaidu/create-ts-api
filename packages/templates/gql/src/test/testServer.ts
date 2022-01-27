@@ -21,5 +21,6 @@ export const testServer = async () => {
     }),
   });
 
+  // @ts-ignore
   return createTestClient(server);
 };
