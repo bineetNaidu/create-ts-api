@@ -22,6 +22,6 @@
     "resolveJsonModule": true,
     "baseUrl": "."
   },
-  "exclude": ["node_modules", "./src/**/*.test.ts", "./src/test/testServer.ts"],
+  "exclude": ["node_modules", "./src/**/*.test.ts", "./src/test/**/*.ts"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
