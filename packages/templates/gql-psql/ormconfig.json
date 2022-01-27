@@ -9,7 +9,7 @@
     "database": "DB_DEV_DATABASE",
     "logging": true,
     "synchronize": true,
-    "entities": ["src/entities/**/*.ts"]
+    "entities": ["src/**/*.entity.ts"]
   },
   {
     "name": "test",
@@ -21,6 +21,6 @@
     "database": "DB_DEV_DATABASE",
     "logging": false,
     "synchronize": true,
-    "entities": ["src/entities/**/*.ts"]
+    "entities": ["src/**/*.entity.ts"]
   }
 ]

@@ -1,4 +1,4 @@
-import { Tweet } from '../entities/Tweet';
+import { Tweet } from './tweet.entity';
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
 @Resolver()
