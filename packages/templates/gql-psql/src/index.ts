@@ -9,10 +9,6 @@ import { createTypeORMConnection } from './utils/createTypeORMConnection';
 dotenv.config();
 
 const bootstrap = async () => {
-  // if (!process.env.DATABASE_URI) {
-  //   throw new Error('??>> {" DATABASE_URI must be defined!! "} ');
-  // }
-
   const conn = await createTypeORMConnection();
 
   if (!conn.isConnected) {
