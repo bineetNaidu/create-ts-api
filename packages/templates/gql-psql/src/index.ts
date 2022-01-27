@@ -2,18 +2,13 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
-import { HelloResolver } from './resolvers/Hello';
-import { ___prod___ } from './utils/contants';
-import { TweetResolvers } from './resolvers/tweets';
+import { HelloResolver } from './modules/Hello/hello.resolver';
+import { TweetResolvers } from './modules/Tweet/tweet.resolver';
 import { createTypeORMConnection } from './utils/createTypeORMConnection';
 
 dotenv.config();
 
 const bootstrap = async () => {
-  if (!process.env.DATABASE_URI) {
-    throw new Error('??>> {" DATABASE_URI must be defined!! "} ');
-  }
-
   const conn = await createTypeORMConnection();
 
   if (!conn.isConnected) {
@@ -27,7 +22,7 @@ const bootstrap = async () => {
     }),
   });
 
-  server.listen().then(({ url }) => {
+  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
 };

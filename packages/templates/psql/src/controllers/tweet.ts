@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Tweet } from '../enitities/Tweet';
+import { Tweet } from '../entities/Tweet';
 
 export const createTweet = async (req: Request, res: Response) => {
   const { username, body } = req.body;

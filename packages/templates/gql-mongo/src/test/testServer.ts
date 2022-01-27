@@ -17,9 +17,10 @@ export const testServer = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [path.join(__dirname, '../resolvers/**/*.ts')],
+      resolvers: [path.join(__dirname, '../**/*.resolver.ts')],
     }),
   });
 
+  // @ts-ignore
   return createTestClient(server);
 };

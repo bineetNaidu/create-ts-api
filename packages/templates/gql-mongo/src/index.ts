@@ -3,20 +3,15 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
-import { HelloResolver } from './resolvers/Hello';
-import { TweetResolver } from './resolvers/TweetResolver';
+import { HelloResolver } from './modules/Hello/hello.resolver';
+import { TweetResolver } from './modules/Tweet/tweet.resolver';
 
 dotenv.config();
 const bootstrap = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error('??>> {" MONGO_URI must be defined!! "} ');
   }
-  await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
-  });
+  await mongoose.connect(process.env.MONGO_URI);
 
   const server = new ApolloServer({
     schema: await buildSchema({
@@ -25,7 +20,7 @@ const bootstrap = async () => {
     }),
   });
 
-  server.listen().then(({ url }) => {
+  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
 };
