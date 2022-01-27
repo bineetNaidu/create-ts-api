@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
-import { HelloResolver } from './resolvers/hello.resolver';
-import { TweetResolver } from './resolvers/tweet.resolver';
+import { HelloResolver } from './modules/Hello/hello.resolver';
+import { TweetResolver } from './modules/Tweet/tweet.resolver';
 
 dotenv.config();
 const bootstrap = async () => {

@@ -1,5 +1,5 @@
 import { Arg, Mutation, Resolver, Query } from 'type-graphql';
-import { TweetModel, Tweet } from '../models/Tweet';
+import { TweetModel, Tweet } from './tweet.model';
 
 @Resolver()
 export class TweetResolver {
