@@ -13,6 +13,9 @@ Install create-ts-api with npm
   # OR
   npx create-ts-api
   cd <your-project-name>
+  # OR
+  yarn create ts-api
+  cd <your-project-name>
 ```
 
 ## Contributing
