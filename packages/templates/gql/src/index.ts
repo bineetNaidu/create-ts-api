@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import 'dotenv/config';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './modules/Hello/hello.resolver';
+import { configuration } from './utils/configuration';
 
 const bootstrap = async () => {
   const server = new ApolloServer({
@@ -12,7 +12,7 @@ const bootstrap = async () => {
     }),
   });
 
-  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  server.listen({ port: configuration.port }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
 };
