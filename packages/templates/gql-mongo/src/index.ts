@@ -1,17 +1,13 @@
 import 'reflect-metadata';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './modules/Hello/hello.resolver';
 import { TweetResolver } from './modules/Tweet/tweet.resolver';
+import { configuration } from './utils/configuration';
 
-dotenv.config();
 const bootstrap = async () => {
-  if (!process.env.MONGO_URI) {
-    throw new Error('??>> {" MONGO_URI must be defined!! "} ');
-  }
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(configuration.database.uri);
 
   const server = new ApolloServer({
     schema: await buildSchema({
@@ -20,7 +16,7 @@ const bootstrap = async () => {
     }),
   });
 
-  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  server.listen({ port: configuration.port }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
 };
