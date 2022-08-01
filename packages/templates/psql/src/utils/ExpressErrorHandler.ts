@@ -6,7 +6,6 @@ const ExpressErrorHandler = (
   res: Response,
   _next: NextFunction
 ) => {
-  /* eslint-enable no-unused-vars */
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   res.status(statusCode);
   res.json({

@@ -1,13 +1,12 @@
-import { Connection } from 'typeorm';
-import { createTypeORMConnection } from '../utils/createTypeORMConnection';
-
-let conn: Connection;
+import { DataSource } from 'typeorm';
+import { AppDataSource } from '../data-source';
+let conn: DataSource;
 
 beforeAll(async () => {
-  conn = await createTypeORMConnection();
+  conn = await AppDataSource.initialize();
 });
 
 afterAll(async () => {
   await conn.dropDatabase();
-  await conn.close();
+  await conn.destroy();
 });

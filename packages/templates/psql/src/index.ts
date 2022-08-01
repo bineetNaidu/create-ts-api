@@ -1,21 +1,22 @@
 import 'express-async-errors';
 import 'reflect-metadata';
 import app from './app';
-import { ___prod___ } from './utils/contants';
-import { createTypeORMConnection } from './utils/createTypeORMConnection';
+import { AppDataSource } from './data-source';
+import { configuration } from './utils/configuration';
+import { __prod__ } from './utils/contants';
 
 (async () => {
   try {
-    const conn = await createTypeORMConnection();
+    const conn = await AppDataSource.initialize();
 
-    if (!conn.isConnected) {
+    if (!conn.isInitialized) {
       throw new Error('Database Connection has not been established yet!');
     }
 
-    const port = process.env.PORT || 4242;
+    const port = configuration.port;
     app.listen(port, () => {
       console.log(`~~~~ Server Started ~~~~`);
-      if (!___prod___) {
+      if (!__prod__) {
         console.log(`**** VISIT: http://localhost:${port} ****`);
       }
     });
