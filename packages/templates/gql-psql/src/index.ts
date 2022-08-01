@@ -4,25 +4,28 @@ import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './modules/Hello/hello.resolver';
 import { TweetResolvers } from './modules/Tweet/tweet.resolver';
-import { createTypeORMConnection } from './utils/createTypeORMConnection';
+import { configuration } from './utils/configuration';
+import { AppDataSource } from './data-source';
 
 dotenv.config();
 
 const bootstrap = async () => {
-  const conn = await createTypeORMConnection();
+  const conn = await AppDataSource.initialize();
 
-  if (!conn.isConnected) {
-    throw new Error('Database Connection has not been established yet!');
+  if (!conn.isInitialized) {
+    throw new Error('Database is not initialized');
   }
 
-  const server = new ApolloServer({
-    schema: await buildSchema({
-      validate: false,
-      resolvers: [HelloResolver, TweetResolvers],
-    }),
+  const schema = await buildSchema({
+    validate: false,
+    resolvers: [HelloResolver, TweetResolvers],
   });
 
-  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  const server = new ApolloServer({
+    schema,
+  });
+
+  server.listen({ port: configuration.port }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
 };
