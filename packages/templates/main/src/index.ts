@@ -1,10 +1,11 @@
 import { app } from './app';
-import { ___prod___ } from './utils/contants';
+import { configuration } from './utils/configuration';
+import { __prod__ } from './utils/contants';
 
-const port = process.env.PORT || 4242;
+const port = configuration.port;
 app.listen(port, () => {
   console.log(`~~~~ Server Started ~~~~`);
-  if (!___prod___) {
+  if (!__prod__) {
     console.log(`**** VISIT: http://localhost:${port} ****`);
   }
 });
