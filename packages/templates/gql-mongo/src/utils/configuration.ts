@@ -13,7 +13,7 @@ export type Configuration = z.infer<typeof zodConfiguration>;
 
 export const configuration = zodConfiguration.parse({
   environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 4000,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 4000,
   database: {
     uri: process.env.MONGO_URI,
   },
