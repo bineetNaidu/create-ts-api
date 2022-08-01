@@ -1,41 +1,19 @@
-import mongoose from 'mongoose';
-import { StringAndRequired } from './utils';
+import { ObjectId } from 'mongodb';
+import { getModelForClass, prop as Property } from '@typegoose/typegoose';
 
-interface ITweet {
-  body: string;
-  username: string;
+class Tweet {
+  readonly _id: ObjectId;
+
+  @Property({ required: true })
+  body!: string;
+
+  @Property({ required: true })
+  username!: string;
 }
 
-interface ITweetDoc extends mongoose.Document {
-  body: string;
-  username: string;
-}
-
-interface ITweetModel extends mongoose.Model<ITweetDoc> {
-  build(data: ITweet): ITweetDoc;
-}
-
-const TweetSchema = new mongoose.Schema(
-  {
-    body: StringAndRequired,
-    username: StringAndRequired,
-  },
-  {
+export const TweetModel = getModelForClass(Tweet, {
+  schemaOptions: {
     timestamps: true,
-    toJSON: {
-      versionKey: false,
-      transform(_doc, ret) {
-        ret.id = ret._id;
-        delete ret._id;
-      },
-    },
-  }
-);
-
-TweetSchema.statics.build = (data: ITweet) => {
-  return new Tweet(data);
-};
-
-const Tweet = mongoose.model<ITweetDoc, ITweetModel>('Tweet', TweetSchema);
-
-export { Tweet };
+    versionKey: false,
+  },
+});

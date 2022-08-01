@@ -1,19 +1,17 @@
 import 'express-async-errors';
 import * as mongoose from 'mongoose';
 import app from './app';
-import { ___prod___ } from './utils/contants';
+import { configuration } from './utils/configuration';
+import { __prod__ } from './utils/contants';
 
 (async () => {
   try {
-    if (!process.env.MONGO_URI) {
-      throw new Error('??>> {" MONGO_URI must be defined!! "} ');
-    }
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(configuration.database.uri);
 
-    const port = process.env.PORT || 4242;
+    const port = configuration.port;
     app.listen(port, () => {
       console.log(`~~~~ Server Started ~~~~`);
-      if (!___prod___) {
+      if (!__prod__) {
         console.log(`**** VISIT: http://localhost:${port} ****`);
       }
     });
