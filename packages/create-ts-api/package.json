@@ -31,9 +31,9 @@
   "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu.github.io/)",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.1",
-    "fs-extra": "^10.0.0",
-    "inquirer": "^8.1.2",
-    "simple-git": "^2.41.1"
+    "chalk": "^5.0.1",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^9.0.2",
+    "simple-git": "^3.11.0"
   }
 }
