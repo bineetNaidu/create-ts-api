@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk');
-const execSync = require('child_process').execSync;
-const fs = require('fs-extra');
-const path = require('path');
-const inquirer = require('inquirer');
-const simpleGit = require('simple-git');
+import chalk from 'chalk';
+import { execSync } from 'child_process';
+import fs from 'fs-extra';
+import path from 'path';
+import inquirer from 'inquirer';
+import simpleGit from 'simple-git';
 
 inquirer
   .prompt([
