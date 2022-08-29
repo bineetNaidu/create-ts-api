@@ -6,7 +6,11 @@ import fs from 'fs-extra';
 import path from 'path';
 import inquirer from 'inquirer';
 import simpleGit from 'simple-git';
+import { fileURLToPath } from 'url';
 
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+console.log(dirname);
 inquirer
   .prompt([
     {
@@ -119,7 +123,7 @@ async function createApp(
 
   fs.mkdirsSync(projectDestination);
 
-  fs.copySync(path.join(__dirname, '..', template), projectName);
+  fs.copySync(path.join(dirname, '..', template), projectName);
 
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(projectName, 'package.json'))
