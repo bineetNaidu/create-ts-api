@@ -1,36 +1,87 @@
-# Getting Started with create-ts-api
+# Standalone Apollo GraphQL API (TypeScript)
 
-This api was bootstrapped with [create-ts-api](https://github.com/bineetNaidu/create-ts-api).
+This GraphQL API starter was bootstrapped with [`create-ts-api`](https://github.com/bineetNaidu/create-ts-api).
 
-## Available Scripts
+It features a lightweight, standalone Apollo Server setup powered by **TypeGraphQL**, **Vitest**, **`tsx`**, and a type-safe custom error handling layer.
 
-In the api directory, you can run:
+---
 
-### `npm start`
+## 📁 Project Architecture
 
-Runs the API in the production mode.\
-Open [http://localhost:4000](http://localhost:4000) to view it in your browser.
+```text
+src/
+├── config/                  # Zod-validated environment configuration
+├── lib/
+│   └── errors/              # Custom GraphQLError classes (ValidationError, NotFoundError, etc.)
+├── modules/                 # Modular GraphQL feature domains
+│   └── Hello/               # Example GraphQL resolver & test suite
+├── types/                   # TypeScript global type definitions & extensions
+├── server.ts                # Standalone Apollo Server bootstrap & graceful shutdown
+└── test/                    # In-memory Apollo test client utilities
+```
 
-### `npm dev:ts`
+---
 
-Runs the API in the development mode.\
-Open [http://localhost:4000](http://localhost:4000) to view it in your browser.
+## 🚀 Available Scripts
+
+In the project directory, you can run:
+
+### `npm run dev`
+
+Runs the API in development mode using `tsx watch` for instant hot reloading without manual rebuilds.
+By default, the server runs at [http://localhost:8080](http://localhost:8080) (or the port specified in `.env`).
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.
+Runs unit and integration tests once using **Vitest**.
 
-### `npm run watch`
+### `npm run test:watch`
 
-Watches and re-compiles on every changes made to the codebase.
+Launches the Vitest test runner in interactive watch mode.
 
 ### `npm run build`
 
-Builds the API for production to the `dist` folder.
+Compiles TypeScript code into the production-ready `dist/` directory.
 
-## Run in ease while developing
+### `npm start`
 
-- open a new terminal and run `npm run watch`
-- then open another terminal and run `npm run dev`
+Executes the compiled JavaScript code from `dist/server.js` in production mode.
 
-**_this will get faster as it automatically re-compiles on the background_**
+---
+
+## 🛡️ Built-in Custom Error Handling
+
+The template includes predefined custom `GraphQLError` classes located in `src/lib/errors/`:
+
+- `ValidationError`: For input argument validation failures (`BAD_USER_INPUT` / status `400`).
+- `NotFoundError`: For missing entities or resources (`NOT_FOUND` / status `404`).
+- `UnauthorizedError`: For missing/invalid authentication (`UNAUTHORIZED` / status `401`).
+- `ForbiddenError`: For insufficient permissions (`FORBIDDEN` / status `403`).
+
+### Example Usage in Resolvers:
+
+```ts
+import { ValidationError } from '@/lib/errors/ValidationError.js';
+
+@Resolver()
+export class UserResolver {
+  @Query(() => User)
+  async user(@Arg("id") id: string) {
+    if (!id) {
+      throw new ValidationError("User ID is required");
+    }
+    // ...
+  }
+}
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Copy `.env.example` to `.env` to configure your environment:
+
+```env
+PORT=8080
+NODE_ENV=development
+```
