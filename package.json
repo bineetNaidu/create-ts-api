@@ -1,12 +1,18 @@
 {
   "private": true,
   "name": "create-ts-api",
-  "version": "1.0.0",
-  "description": "A utility command to set up TypeScript API",
-  "workspaces": {
-    "packages": ["packages/*"]
-  },
-  "keywords": ["Node", "express", "api", "typescript", "graphql"],
-  "author": "BineetNaidu (https://bineetnaidu.github.io/)",
+  "version": "2.0.0",
+  "description": "Interactive CLI tool to instantly bootstrap production-ready TypeScript Node.js APIs",
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "Node",
+    "express",
+    "api",
+    "typescript",
+    "graphql"
+  ],
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "license": "MIT"
 }
