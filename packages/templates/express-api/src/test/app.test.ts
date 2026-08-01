@@ -18,21 +18,21 @@ describe('Express API Integration Tests', () => {
 
   it('POST /api/v1/users should create a user and return 201', async () => {
     const res = await request(app).post('/api/v1/users').send({
-      username: 'john',
-      email: 'john@example.com',
+      username: 'alex',
+      email: 'alex@example.com',
     });
 
     expect(res.status).toBe(201);
     expect(res.body.data).toMatchObject({
-      username: 'john',
-      email: 'john@example.com',
+      username: 'alex',
+      email: 'alex@example.com',
     });
   });
 
   it('POST /api/v1/users should return ConflictError (409) when creating duplicate email', async () => {
     const res = await request(app).post('/api/v1/users').send({
-      username: 'john2',
-      email: 'john@example.com',
+      username: 'taylor',
+      email: 'alex@example.com',
     });
 
     expect(res.status).toBe(409);
