@@ -1,26 +1,32 @@
-/*
-
-* IMPORTANT:
-	IF YOU HAVE ANY BETTER GRAPHQL TESTS IMPLEMENTATIONS, 
-	THEN PLEASE SEND THEM TO ME VIA A GITHUB ISSUE OR PR, 
-	I'LL UPDATE THIS FILE
-
-*/
 import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from '@apollo/server';
 import { buildSchema } from 'type-graphql';
-// import { HelloResolver } from '../resolvers/Hello';
-import path from 'path';
-import { createTestClient } from 'apollo-server-testing';
+import { HelloResolver } from '../modules/Hello/hello.resolver.js';
+import { TweetResolver } from '../modules/Tweet/tweet.resolver.js';
+import { CatchMongoErrors } from '@/middlewares/CatchErrors.js';
 
-export const testServer = async () => {
-  const server = new ApolloServer({
-    schema: await buildSchema({
-      validate: false,
-      resolvers: [path.join(__dirname, '../**/*.resolver.ts')],
-    }),
+export const createTestServer = async () => {
+  const schema = await buildSchema({
+    resolvers: [HelloResolver, TweetResolver],
+    globalMiddlewares: [CatchMongoErrors],
+    validate: true,
   });
 
-  // @ts-ignore
-  return createTestClient(server);
+  return new ApolloServer({ schema });
+};
+
+export const executeGraphQL = async (
+  server: ApolloServer,
+  query: string,
+  variables: Record<string, unknown>,
+) => {
+  const response = await server.executeOperation({
+    query,
+    variables,
+  });
+
+  if (response.body.kind === 'single') {
+    return response.body.singleResult;
+  }
+  throw new Error('Unexpected multipart GraphQL response in test');
 };
