@@ -41,11 +41,11 @@ describe('UserController Unit Tests', () => {
     it('should return 200 with matching user', async () => {
       const mockUser = { id: '1', username: 'alex', email: 'alex@example.com', createdAt: new Date() };
       mockRequest.params = { id: '1' };
-      vi.spyOn(mockUserService, 'getUserById').mockResolvedValue(mockUser);
+      const getUserByIdSpy = vi.spyOn(mockUserService, 'getUserById').mockResolvedValue(mockUser);
 
       await userController.getUserById(mockRequest as Request, mockResponse as Response);
 
-      expect(mockUserService.getUserById).toHaveBeenCalledWith('1');
+      expect(getUserByIdSpy).toHaveBeenCalledWith('1');
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({ data: mockUser });
     });
@@ -56,11 +56,11 @@ describe('UserController Unit Tests', () => {
       const dto = { username: 'alex', email: 'alex@example.com' };
       const createdUser = { id: '1', ...dto, createdAt: new Date() };
       mockRequest.body = dto;
-      vi.spyOn(mockUserService, 'createUser').mockResolvedValue(createdUser);
+      const createUserSpy = vi.spyOn(mockUserService, 'createUser').mockResolvedValue(createdUser);
 
       await userController.createUser(mockRequest as Request, mockResponse as Response);
 
-      expect(mockUserService.createUser).toHaveBeenCalledWith(dto);
+      expect(createUserSpy).toHaveBeenCalledWith(dto);
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({ data: createdUser });
     });
