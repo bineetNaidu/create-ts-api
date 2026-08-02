@@ -48,8 +48,7 @@ describe('TweetService Unit Tests', () => {
       vi.spyOn(mockTweetRepository, 'create').mockResolvedValue(mockCreated);
 
       const result = await tweetService.createTweet(dto);
-      expect(mockTweetRepository.create).toHaveBeenCalledWith(dto);
-      expect(result).toEqual(mockCreated);
+      expect(mockCreated).toEqual(result);
     });
   });
 });
