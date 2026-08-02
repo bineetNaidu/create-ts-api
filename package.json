@@ -4,7 +4,8 @@
   "version": "2.0.0",
   "description": "Interactive CLI tool to instantly bootstrap production-ready TypeScript Node.js APIs",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/templates/*"
   ],
   "keywords": [
     "Node",
@@ -13,6 +14,17 @@
     "typescript",
     "graphql"
   ],
+  "scripts": {
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  },
   "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "oxlint-tsgolint": "^7.0.2001"
+  }
 }
