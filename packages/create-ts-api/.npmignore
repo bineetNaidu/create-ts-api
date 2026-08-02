@@ -1,0 +1,28 @@
+# Source files
+src/
+tsconfig.json
+tsup.config.ts
+
+# Tooling & Editor config
+.editorconfig
+.prettierrc
+.eslintrc*
+.oxlintrc*
+.oxfmtrc*
+.vscode/
+
+# Logs & Environment
+*.log
+.env*
+
+# Tests & CI
+test/
+__tests__/
+*.test.ts
+*.spec.ts
+.github/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+temp
