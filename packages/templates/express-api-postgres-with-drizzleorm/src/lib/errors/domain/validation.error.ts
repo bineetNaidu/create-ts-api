@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * ValidationError — HTTP 422
@@ -31,6 +31,6 @@ export class ValidationError extends BaseAppError {
   public readonly statusCode = 422;
 
   constructor(message: string, options?: BaseAppErrorOptions) {
-    super("VALIDATION_ERROR", message, options);
+    super('VALIDATION_ERROR', message, options);
   }
 }

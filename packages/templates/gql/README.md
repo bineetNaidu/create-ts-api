@@ -66,9 +66,9 @@ import { ValidationError } from '@/lib/errors/ValidationError.js';
 @Resolver()
 export class UserResolver {
   @Query(() => User)
-  async user(@Arg("id") id: string) {
+  async user(@Arg('id') id: string) {
     if (!id) {
-      throw new ValidationError("User ID is required");
+      throw new ValidationError('User ID is required');
     }
     // ...
   }

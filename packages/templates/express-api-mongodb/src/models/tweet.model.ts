@@ -20,7 +20,7 @@ const tweetSchema = new Schema<ITweetDocument>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const TweetModel = mongoose.model<ITweetDocument>('Tweet', tweetSchema);

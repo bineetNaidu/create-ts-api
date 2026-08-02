@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * ConflictError — HTTP 409
@@ -32,6 +32,6 @@ export class ConflictError extends BaseAppError {
   public readonly statusCode = 409;
 
   constructor(message: string, options?: BaseAppErrorOptions) {
-    super("CONFLICT", message, options);
+    super('CONFLICT', message, options);
   }
 }

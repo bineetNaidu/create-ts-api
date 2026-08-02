@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * ForbiddenError — HTTP 403
@@ -35,6 +35,6 @@ export class ForbiddenError extends BaseAppError {
   public readonly statusCode = 403;
 
   constructor(message: string, options?: BaseAppErrorOptions) {
-    super("FORBIDDEN", message, options);
+    super('FORBIDDEN', message, options);
   }
 }

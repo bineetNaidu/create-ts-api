@@ -1,10 +1,7 @@
 import { AppError } from './AppError.js';
 
 export class DatabaseError extends AppError {
-  constructor(
-    message: string = 'Database operation failed',
-    extensions?: Record<string, unknown>,
-  ) {
+  constructor(message: string = 'Database operation failed', extensions?: Record<string, unknown>) {
     super(message, 'DATABASE_ERROR', 500, extensions);
   }
 }
@@ -21,24 +18,13 @@ export const handleMongoError = (error: unknown): never => {
     throw new AppError(error.message, 'BAD_USER_INPUT', 400);
   }
 
-  if (
-    typeof error === 'object' &&
-    error !== null &&
-    'code' in error &&
-    error.code === 11000
-  ) {
-    throw new AppError(
-      'Resource already exists (duplicate entry)',
-      'CONFLICT',
-      409,
-    );
+  if (typeof error === 'object' && error !== null && 'code' in error && error.code === 11000) {
+    throw new AppError('Resource already exists (duplicate entry)', 'CONFLICT', 409);
   }
 
   if (error instanceof AppError) {
     throw error;
   }
 
-  throw new DatabaseError(
-    error instanceof Error ? error.message : 'Database error occurred',
-  );
+  throw new DatabaseError(error instanceof Error ? error.message : 'Database error occurred');
 };

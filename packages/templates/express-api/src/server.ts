@@ -10,9 +10,7 @@ const bootstrap = () => {
   const app = createApp();
 
   const server = app.listen(env.port, () => {
-    console.log(
-      `🚀  Express v5 REST API ready at http://localhost:${env.port}/api/v1`,
-    );
+    console.log(`🚀  Express v5 REST API ready at http://localhost:${env.port}/api/v1`);
   });
 
   const gracefulShutdown = (signal: string) => {

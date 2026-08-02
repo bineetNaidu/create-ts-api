@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * InternalError — HTTP 500
@@ -44,6 +44,6 @@ export class InternalError extends BaseAppError {
 
   constructor(message: string, options?: BaseAppErrorOptions) {
     // Non-operational by default — internal errors are unexpected by definition.
-    super("INTERNAL_ERROR", message, { isOperational: false, ...options });
+    super('INTERNAL_ERROR', message, { isOperational: false, ...options });
   }
 }

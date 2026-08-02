@@ -2,6 +2,9 @@
   "name": "@create-ts-api/gql",
   "version": "1.0.0",
   "description": "A Graphql api bootstraped w/ create-ts-api",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
@@ -10,9 +13,6 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": [],
-  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
-  "license": "MIT",
   "dependencies": {
     "@apollo/server": "^5.5.1",
     "dotenv": "^17.4.2",

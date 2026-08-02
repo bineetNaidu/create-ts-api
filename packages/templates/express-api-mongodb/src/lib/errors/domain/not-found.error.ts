@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * NotFoundError — HTTP 404
@@ -32,6 +32,6 @@ export class NotFoundError extends BaseAppError {
   public readonly statusCode = 404;
 
   constructor(message: string, options?: BaseAppErrorOptions) {
-    super("NOT_FOUND", message, options);
+    super('NOT_FOUND', message, options);
   }
 }

@@ -9,7 +9,7 @@ export const errorHandler = (
   err: unknown,
   _req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ): void => {
   if (err instanceof BaseAppError) {
     res.status(err.statusCode).json({
@@ -30,7 +30,11 @@ export const errorHandler = (
   res.status(500).json({
     error: {
       code: 'INTERNAL_ERROR',
-      message: isProduction ? 'Internal server error' : err instanceof Error ? err.message : 'Unknown error',
+      message: isProduction
+        ? 'Internal server error'
+        : err instanceof Error
+          ? err.message
+          : 'Unknown error',
       details: [],
     },
   });

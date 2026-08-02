@@ -2,6 +2,9 @@
   "name": "@create-ts-api/express-api",
   "version": "0.1.0",
   "description": "Express v5 REST API starter with Layered Architecture and Dependency Injection",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
@@ -10,9 +13,6 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": [],
-  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",

@@ -1,4 +1,4 @@
-import type { ErrorCode } from "./errorCode.type.js";
+import type { ErrorCode } from './errorCode.type.js';
 
 export interface BaseAppErrorOptions {
   details?: unknown[];

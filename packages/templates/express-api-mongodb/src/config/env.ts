@@ -9,7 +9,5 @@ const envConfigSchema = z.object({
 export const env = envConfigSchema.parse({
   environment: process.env.NODE_ENV || 'development',
   port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
-  mongoUri:
-    process.env.MONGO_URI ||
-    'mongodb://localhost:27017/create_ts_api_express_mongo_demo',
+  mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/create_ts_api_express_mongo_demo',
 });

@@ -2,6 +2,9 @@
   "name": "@create-ts-api/express-api-postgres-with-drizzleorm",
   "version": "1.0.0",
   "description": "Express v5 REST API starter with PostgreSQL (Drizzle ORM), Layered Architecture, and Dependency Injection",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
@@ -12,9 +15,6 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },
-  "keywords": [],
-  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",

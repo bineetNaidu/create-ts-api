@@ -1,5 +1,5 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
-import type { ErrorCode } from "../errorCode.type.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
+import type { ErrorCode } from '../errorCode.type.js';
 
 /**
  * HTTP 400 Bad Request Exception.
@@ -10,10 +10,10 @@ export class BadRequestError extends BaseAppError {
   public readonly statusCode = 400;
 
   constructor(
-    message = "Bad Request",
+    message = 'Bad Request',
     details: BaseAppErrorOptions = { details: [], isOperational: true },
     /** Allows specific microservices to narrow down the general validation token into precise codes */
-    code: ErrorCode = "BAD_REQUEST",
+    code: ErrorCode = 'BAD_REQUEST',
   ) {
     super(code, message, details);
   }

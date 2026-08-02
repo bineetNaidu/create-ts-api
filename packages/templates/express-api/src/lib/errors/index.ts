@@ -10,13 +10,13 @@
  * import { NotFoundError, ValidationError } from "@/lib/errors";
  * ```
  */
-export { BaseAppError } from "./base.error.js";
-export type { BaseAppErrorOptions } from "./base.error.js";
-export type { ErrorCode } from "./errorCode.type.js";
-export { BadRequestError } from "./domain/bad-request.error.js";
-export { ConflictError } from "./domain/conflict.error.js";
-export { ForbiddenError } from "./domain/forbidden.error.js";
-export { InternalError } from "./domain/internal.error.js";
-export { NotFoundError } from "./domain/not-found.error.js";
-export { UnauthorizedError } from "./domain/unauthorized.error.js";
-export { ValidationError } from "./domain/validation.error.js";
+export { BaseAppError } from './base.error.js';
+export type { BaseAppErrorOptions } from './base.error.js';
+export type { ErrorCode } from './errorCode.type.js';
+export { BadRequestError } from './domain/bad-request.error.js';
+export { ConflictError } from './domain/conflict.error.js';
+export { ForbiddenError } from './domain/forbidden.error.js';
+export { InternalError } from './domain/internal.error.js';
+export { NotFoundError } from './domain/not-found.error.js';
+export { UnauthorizedError } from './domain/unauthorized.error.js';
+export { ValidationError } from './domain/validation.error.js';

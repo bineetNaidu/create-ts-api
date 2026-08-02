@@ -22,9 +22,7 @@ export const connectDatabase = async (): Promise<void> => {
     console.log('🐘 Connected to PostgreSQL (Drizzle ORM) successfully');
   } catch (error) {
     console.error('❌ Error connecting to PostgreSQL database:', error);
-    console.error(
-      '💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).',
-    );
+    console.error('💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).');
     process.exit(1);
   }
 };

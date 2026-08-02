@@ -27,7 +27,9 @@ describe('UserController Unit Tests', () => {
 
   describe('getUsers', () => {
     it('should return 200 with list of users', async () => {
-      const mockUsers = [{ id: '1', username: 'alex', email: 'alex@example.com', createdAt: new Date() }];
+      const mockUsers = [
+        { id: '1', username: 'alex', email: 'alex@example.com', createdAt: new Date() },
+      ];
       vi.spyOn(mockUserService, 'getAllUsers').mockResolvedValue(mockUsers);
 
       await userController.getUsers(mockRequest as Request, mockResponse as Response);
@@ -39,7 +41,12 @@ describe('UserController Unit Tests', () => {
 
   describe('getUserById', () => {
     it('should return 200 with matching user', async () => {
-      const mockUser = { id: '1', username: 'alex', email: 'alex@example.com', createdAt: new Date() };
+      const mockUser = {
+        id: '1',
+        username: 'alex',
+        email: 'alex@example.com',
+        createdAt: new Date(),
+      };
       mockRequest.params = { id: '1' };
       const getUserByIdSpy = vi.spyOn(mockUserService, 'getUserById').mockResolvedValue(mockUser);
 

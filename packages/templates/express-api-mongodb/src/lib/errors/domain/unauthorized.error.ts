@@ -1,4 +1,4 @@
-import { BaseAppError, type BaseAppErrorOptions } from "../base.error.js";
+import { BaseAppError, type BaseAppErrorOptions } from '../base.error.js';
 
 /**
  * UnauthorizedError — HTTP 401
@@ -32,6 +32,6 @@ export class UnauthorizedError extends BaseAppError {
   public readonly statusCode = 401;
 
   constructor(message: string, options?: BaseAppErrorOptions) {
-    super("UNAUTHORIZED", message, options);
+    super('UNAUTHORIZED', message, options);
   }
 }

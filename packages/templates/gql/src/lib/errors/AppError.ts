@@ -9,7 +9,7 @@ export class AppError extends GraphQLError {
     message: string,
     code: string = 'INTERNAL_SERVER_ERROR',
     statusCode: number = 500,
-    extensions?: Record<string, unknown>
+    extensions?: Record<string, unknown>,
   ) {
     super(message, {
       extensions: {
