@@ -1,18 +1,20 @@
 {
-  "private": true,
   "name": "create-ts-api",
   "version": "2.0.0",
+  "private": true,
   "description": "Interactive CLI tool to instantly bootstrap production-ready TypeScript Node.js APIs",
+  "keywords": [
+    "Node",
+    "api",
+    "express",
+    "graphql",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "workspaces": [
     "packages/*",
     "packages/templates/*"
-  ],
-  "keywords": [
-    "Node",
-    "express",
-    "api",
-    "typescript",
-    "graphql"
   ],
   "scripts": {
     "lint": "oxlint",
@@ -20,8 +22,6 @@
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check"
   },
-  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
-  "license": "MIT",
   "devDependencies": {
     "oxfmt": "^0.61.0",
     "oxlint": "^1.76.0",
