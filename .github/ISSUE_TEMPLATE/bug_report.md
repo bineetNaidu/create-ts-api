@@ -1,33 +1,41 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: '[BUG] <title>'
-labels: bug
-assignees: bineetNaidu
+name: 🐛 Bug Report
+about: Create a report to help us fix a bug in create-ts-api or starter templates
+title: 'fix: <short summary>'
+labels: ['bug']
+assignees: ['bineetNaidu']
 ---
 
-**Describe the bug**
+## 🐛 Bug Description
+
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+## ⚙️ Environment Information
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+- **OS**: [e.g. macOS Sonoma 14.2, Ubuntu 22.04, Windows 11]
+- **Node Version**: [e.g. `node -v` -> `v20.11.0`]
+- **Package Manager**: [e.g. `npm` / `pnpm` / `yarn` / `bun`]
+- **CLI Version**: [e.g. `v2.0.0-alpha.1`]
+- **Template Selected**: [e.g. `express-api`, `express-api-postgres-with-drizzleorm`, `gql-mongo`, etc.]
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## 🔄 Steps to Reproduce
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+1. Run command `...`
+2. Select option `...`
+3. See error output:
 
-**Desktop (please complete the following information):**
+```text
+<paste terminal output or stack trace here>
+```
 
-- OS: [e.g. iOS]
-- Node Version: [v16.2.0]
-- NPM version: [v7.13.0]
+## 🎯 Expected Behavior
 
-**Additional context**
+A clear description of what you expected to happen.
+
+## 📸 Screenshots / Logs
+
+If applicable, add screenshots or error log snippets.
+
+## 💡 Additional Context
+
 Add any other context about the problem here.
