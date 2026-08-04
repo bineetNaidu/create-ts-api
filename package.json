@@ -1,12 +1,41 @@
 {
-  "private": true,
   "name": "create-ts-api",
-  "version": "1.0.0",
-  "description": "A utility command to set up TypeScript API",
-  "workspaces": {
-    "packages": ["packages/*"]
+  "version": "2.0.0",
+  "private": true,
+  "description": "Interactive CLI tool to instantly bootstrap production-ready TypeScript Node.js APIs",
+  "keywords": [
+    "Node",
+    "api",
+    "express",
+    "graphql",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
+  "workspaces": [
+    "packages/*",
+    "packages/templates/*"
+  ],
+  "scripts": {
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "prepare": "husky"
   },
-  "keywords": ["Node", "express", "api", "typescript", "graphql"],
-  "author": "BineetNaidu (https://bineetnaidu.github.io/)",
-  "license": "MIT"
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "oxlint-tsgolint": "^7.0.2001"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,md}": [
+      "npm run fmt:check"
+    ],
+    "*.{js,ts,jsx,tsx}": [
+      "npm run lint"
+    ]
+  }
 }

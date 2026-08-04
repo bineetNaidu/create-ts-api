@@ -1,40 +1,46 @@
 {
   "name": "create-ts-api",
-  "version": "1.7.1",
-  "description": "A utility command to setup nodejs TS api",
-  "main": "index.js",
-  "type": "module",
+  "version": "2.0.0",
+  "description": "Interactive CLI tool to instantly scaffold production-grade Node.js TypeScript APIs in seconds",
+  "keywords": [
+    "api",
+    "create-ts-api",
+    "express",
+    "graphql",
+    "scaffold",
+    "typescript"
+  ],
+  "homepage": "https://github.com/bineetNaidu/create-ts-api#readme",
+  "bugs": {
+    "url": "https://github.com/bineetNaidu/create-ts-api/issues"
+  },
+  "license": "MIT",
+  "author": "Bineet Naidu (https://x.com/nobineetnaidu)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bineetNaidu/create-ts-api.git"
   },
-  "bugs": {
-    "url": "https://github.com/bineetNaidu/create-ts-api/issues"
-  },
-  "homepage": "https://github.com/bineetNaidu/create-ts-api#readme",
   "bin": {
-    "create-ts-api": "./src/index.js"
-  },
-  "scripts": {
-    "prepublishOnly": "cp -R ../templates .",
-    "postpublish": "rm -rf templates"
+    "create-ts-api": "./dist/index.js"
   },
   "files": [
-    "templates/main",
-    "templates/mongo",
-    "templates/psql",
-    "templates/gql",
-    "templates/gql-psql",
-    "templates/gql-mongo",
-    "src/index.js"
+    "dist",
+    "templates"
   ],
-  "keywords": [],
-  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu.github.io/)",
-  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepack": "npm run build && cp -R ../templates .",
+    "postpack": "rm -rf templates"
+  },
   "dependencies": {
-    "chalk": "^5.0.1",
-    "fs-extra": "^10.1.0",
-    "inquirer": "^9.0.2",
+    "@clack/prompts": "^1.7.0",
     "simple-git": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2"
   }
 }

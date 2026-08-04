@@ -1,20 +1,28 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: "[FEAT] <title>"
-labels: enhancement, good first issue
-assignees: bineetNaidu
-
+name: 🚀 Feature Request
+about: Suggest an idea or new template for create-ts-api
+title: 'feat: <short summary>'
+labels: ['enhancement']
+assignees: ['bineetNaidu']
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 💡 Feature Summary
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+A clear and concise description of the feature or new template architecture you would like to see in `create-ts-api`.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## ❓ Problem or Use Case
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+Is your feature request related to a problem or a specific architectural use case?
+_Ex: "I want a Fastify REST API template with Prisma ORM..."_
+
+## 🎯 Proposed Solution
+
+Describe the solution or feature layout you'd like to see implemented.
+
+## 🔄 Alternatives Considered
+
+A description of any alternative solutions or workarounds you've considered.
+
+## 📋 Additional Context
+
+Add any other context, code snippets, or links about the feature request here.
