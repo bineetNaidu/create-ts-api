@@ -77,10 +77,10 @@ npm test
 
 ## 🔀 Submitting a Pull Request
 
-1. Fork the repository and create your feature branch from `release/v2`.
+1. Fork the repository and create your feature branch from `master`.
 2. Make your changes and write unit/integration tests where applicable.
 3. Ensure `npm run lint` and `npm test` pass with 0 errors.
-4. Push to your fork and submit a Pull Request targeting the `release/v2` branch.
+4. Push to your fork and submit a Pull Request targeting the `master` branch.
 5. Provide a clear PR description detailing the problem solved and test evidence.
 
 ---

@@ -6,7 +6,7 @@
     <a href="https://www.npmjs.com/package/create-ts-api"><img src="https://img.shields.io/npm/v/create-ts-api.svg?color=blue&style=flat-square" alt="npm version"></a>
     <a href="https://www.npmjs.com/package/create-ts-api"><img src="https://img.shields.io/npm/dm/create-ts-api.svg?color=blue&style=flat-square" alt="npm downloads"></a>
     <a href="https://node.js.org"><img src="https://img.shields.io/node/v/create-ts-api.svg?style=flat-square" alt="node version"></a>
-    <a href="https://github.com/bineetNaidu/create-ts-api/blob/release/v2/LICENSE"><img src="https://img.shields.io/npm/l/create-ts-api.svg?color=green&style=flat-square" alt="license"></a>
+    <a href="https://github.com/bineetNaidu/create-ts-api/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/create-ts-api.svg?color=green&style=flat-square" alt="license"></a>
   </p>
 
 <sub>Built with ❤️ for TypeScript developers by <a href="https://x.com/nobineetnaidu">Bineet Naidu</a></sub>
@@ -62,9 +62,9 @@ The CLI automatically detects which package manager invoked the process (`npm`, 
 
 ## 🤝 Contributing
 
-Contributions are welcome! Check out our [Contributing Guide](https://github.com/bineetNaidu/create-ts-api/blob/release/v2/CONTRIBUTING.md) to get started.
+Contributions are welcome! Check out our [Contributing Guide](https://github.com/bineetNaidu/create-ts-api/blob/master/CONTRIBUTING.md) to get started.
 
-Please adhere to our [Code of Conduct](https://github.com/bineetNaidu/create-ts-api/blob/release/v2/CODE_OF_CONDUCT.md).
+Please adhere to our [Code of Conduct](https://github.com/bineetNaidu/create-ts-api/blob/master/CODE_OF_CONDUCT.md).
 
 ---
 
@@ -76,4 +76,4 @@ Please adhere to our [Code of Conduct](https://github.com/bineetNaidu/create-ts-
 
 ## 📄 License
 
-This project is licensed under the [MIT License](https://github.com/bineetNaidu/create-ts-api/blob/release/v2/LICENSE).
+This project is licensed under the [MIT License](https://github.com/bineetNaidu/create-ts-api/blob/master/LICENSE).
