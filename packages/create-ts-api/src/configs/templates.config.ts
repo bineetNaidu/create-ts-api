@@ -2,33 +2,33 @@ import type { TemplateOption } from '@/types/index.js';
 
 export const TEMPLATE_OPTIONS: TemplateOption[] = [
   {
-    label: '⚡ Express REST API',
+    label: '🌐 REST API — Express Standard',
     value: 'express-api',
-    hint: 'Express v5, Zod, Vitest, Layered N-Tier Architecture',
+    hint: 'Express, Zod validation, Vitest, Layered N-Tier Architecture',
   },
   {
-    label: '🍃 Express REST API + MongoDB',
+    label: '🍃 REST API — Express + MongoDB (Mongoose)',
     value: 'express-api-mongodb',
-    hint: 'Express v5, Mongoose, Zod, Vitest, In-Memory Mongo tests',
+    hint: 'Express, Mongoose, Zod, Vitest, In-Memory MongoDB tests',
   },
   {
-    label: '🐘 Express REST API + PostgreSQL',
+    label: '🌧️ REST API — Express + PostgreSQL (Drizzle ORM)',
     value: 'express-api-postgres-with-drizzleorm',
-    hint: 'Express v5, Drizzle ORM, Drizzle Kit, Zod, Vitest',
+    hint: 'Express, Drizzle ORM, Drizzle Kit, Zod, Vitest, Docker',
   },
   {
-    label: '🚀 GraphQL API',
+    label: '📐 GraphQL API — Apollo Server Standard',
     value: 'gql',
-    hint: 'Apollo Server v5, TypeGraphQL, tsx, Vitest',
+    hint: 'Apollo Server, TypeGraphQL, tsx, Vitest integration tests',
   },
   {
-    label: '🍃 GraphQL API + MongoDB',
+    label: '🍃 GraphQL API — Apollo Server + MongoDB (Typegoose)',
     value: 'gql-mongo',
-    hint: 'Apollo Server v5, TypeGraphQL, Typegoose, Mongoose',
+    hint: 'Apollo Server, TypeGraphQL, Typegoose, Mongoose, In-Memory DB for tests',
   },
   {
-    label: '🐘 GraphQL API + PostgreSQL',
+    label: '🐘 GraphQL API — Apollo Server + PostgreSQL (TypeORM)',
     value: 'graphql-postgres-typeorm',
-    hint: 'Apollo Server v5, TypeGraphQL, TypeORM, PostgreSQL',
+    hint: 'Apollo Server, TypeGraphQL, TypeORM, PostgreSQL, Docker setup',
   },
 ];
