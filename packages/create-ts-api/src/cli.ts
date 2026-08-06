@@ -15,6 +15,7 @@ import { detectPackageManager } from '@/utils/package-manager.js';
 import { scaffoldProject } from '@/utils/scaffold-project.js';
 import { ensureGitignore } from '@/utils/ensure-gitignore.js';
 import { initializeGitRepository } from '@/utils/git-runner.js';
+import { getCliVersion } from '@/utils/get-version.js';
 
 const execAsync = promisify(exec);
 const __filename = fileURLToPath(import.meta.url);
@@ -25,7 +26,18 @@ const __dirname = path.dirname(__filename);
  */
 export async function runCli(): Promise<void> {
   console.clear();
-  intro(color.bgCyan(color.black(' create-ts-api v2.0.0-alpha.1 ')));
+
+  const version = getCliVersion();
+  const packageManager = detectPackageManager();
+
+  intro(
+    `${color.bold(color.cyan('create-ts-api'))} ${color.dim(`v${version}`)}\n` +
+      `   ${color.dim('Scaffold production-grade Node.js TypeScript APIs in seconds')}\n` +
+      `   ${color.dim('─'.repeat(60))}\n` +
+      `   ${color.blue('•')} Node.js:   ${color.cyan(process.version)}\n` +
+      `   ${color.blue('•')} Manager:   ${color.cyan(packageManager)}\n` +
+      `   ${color.blue('•')} Templates: ${color.cyan('Express v5 • GraphQL • Apollo v5 • PostgreSQL • MongoDB')}\n`,
+  );
 
   // 1. Interactive Prompts
   const projectName = await promptProjectName();
@@ -47,6 +59,7 @@ export async function runCli(): Promise<void> {
     progressSpinner.start('Scaffolding API project files...');
     await scaffoldProject({ projectName, projectDescription, projectPath, templatePath });
     await ensureGitignore(projectPath);
+    await new Promise((resolve) => setTimeout(resolve, 3000)); // delay for three(3) second!
     progressSpinner.stop('Scaffolded API project files successfully.');
   } catch (error) {
     progressSpinner.stop('Failed to scaffold project files.');
@@ -55,7 +68,6 @@ export async function runCli(): Promise<void> {
   }
 
   // Step B: Install dependencies
-  const packageManager = detectPackageManager();
   if (shouldInstall) {
     progressSpinner.start(`Installing dependencies with ${packageManager}...`);
     try {
@@ -80,11 +92,18 @@ export async function runCli(): Promise<void> {
   }
 
   // Final Outro Instructions
-  outro(color.green('🎉 Your new API project is ready!'));
-  console.log(`\nNext steps:`);
-  console.log(`  ${color.cyan(`cd ${projectName}`)}`);
-  if (!shouldInstall) {
-    console.log(`  ${color.cyan(`${packageManager} install`)}`);
-  }
-  console.log(`  ${color.cyan(`${packageManager} run dev`)}\n`);
+  const nextSteps = [
+    `cd ${projectName}`,
+    `cp .env.example .env`,
+    ...(!shouldInstall ? [`${packageManager} install`] : []),
+    `${packageManager} run dev`,
+  ];
+
+  outro(color.bold(color.green('🎉 Project created successfully!')));
+
+  console.log(`\n${color.bold('Next steps to get started:')}`);
+  nextSteps.forEach((step, idx) => {
+    console.log(`  ${color.dim(`${idx + 1}.`)} ${color.cyan(step)}`);
+  });
+  console.log(`\n${color.dim('Happy coding! 🚀')}\n`);
 }
