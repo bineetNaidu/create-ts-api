@@ -34,7 +34,7 @@ Runs the API in development mode using `tsx watch` for instant hot reloading wit
 
 ### `npm test`
 
-Runs unit & integration tests using **Vitest** against an isolated PostgreSQL test database (`ts_api_test`).
+Runs unit & integration tests using **Vitest** against an ephemeral PostgreSQL container powered by **Testcontainers**.
 
 ### `npm run test:watch`
 
@@ -50,16 +50,15 @@ Executes the compiled JavaScript code from `dist/server.js`.
 
 ---
 
-## 🐳 Docker Compose & Dual Databases
+## 🐳 Docker Compose
 
-Spin up both local development (`create_ts_api_gql_psql_demo`) and test (`create_ts_api_gql_psql_demo_test`) PostgreSQL databases with a single command:
+Spin up a local development PostgreSQL database (`create_ts_api_gql_psql_demo`) with a single command:
 
 ```bash
 docker compose up -d
 ```
 
 - **Development DB**: `postgres://postgres:postgres@localhost:5432/create_ts_api_gql_psql_demo`
-- **Test DB**: `postgres://postgres:postgres@localhost:5432/create_ts_api_gql_psql_demo_test`
 
 ---
 

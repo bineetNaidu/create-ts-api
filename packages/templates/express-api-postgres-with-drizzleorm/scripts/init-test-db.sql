@@ -1,1 +1,0 @@
-CREATE DATABASE create_ts_api_express_api_psql_demo_test;

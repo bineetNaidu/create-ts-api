@@ -12,9 +12,7 @@ const getEnv = () =>
     port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
     databaseUrl:
       process.env.DATABASE_URL ||
-      (process.env.NODE_ENV === 'test'
-        ? 'postgres://postgres:postgres@localhost:5432/create_ts_api_gql_psql_demo_test'
-        : 'postgres://postgres:postgres@localhost:5432/create_ts_api_gql_psql_demo'),
+      'postgres://postgres:postgres@localhost:5432/create_ts_api_gql_psql_demo',
   });
 
 export const env = {

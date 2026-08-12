@@ -11,7 +11,6 @@ services:
       - POSTGRES_DB=create_ts_api_express_api_psql_demo
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
 
 volumes:
   postgres_data:
