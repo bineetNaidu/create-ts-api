@@ -6,12 +6,25 @@ const envConfigSchema = z.object({
   databaseUrl: z.string().min(1, 'DATABASE_URL is required'),
 });
 
-export const env = envConfigSchema.parse({
-  environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
-  databaseUrl:
-    process.env.DATABASE_URL ||
-    (process.env.NODE_ENV === 'test'
-      ? 'postgres://postgres:postgres@localhost:5432/create_ts_api_express_api_psql_demo_test'
-      : 'postgres://postgres:postgres@localhost:5432/create_ts_api_express_api_psql_demo'),
-});
+const getEnv = () =>
+  envConfigSchema.parse({
+    environment: process.env.NODE_ENV || 'development',
+    port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
+    databaseUrl:
+      process.env.DATABASE_URL ||
+      (process.env.NODE_ENV === 'test'
+        ? 'postgres://postgres:postgres@localhost:5432/create_ts_api_express_api_psql_demo_test'
+        : 'postgres://postgres:postgres@localhost:5432/create_ts_api_express_api_psql_demo'),
+  });
+
+export const env = {
+  get environment() {
+    return getEnv().environment;
+  },
+  get port() {
+    return getEnv().port;
+  },
+  get databaseUrl() {
+    return getEnv().databaseUrl;
+  },
+};

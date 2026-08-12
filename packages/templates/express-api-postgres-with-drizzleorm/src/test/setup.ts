@@ -1,22 +1,29 @@
 import { beforeAll, afterAll, beforeEach } from 'vitest';
-import { db, client } from '@/db/index.js';
+import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import path from 'node:path';
+import { db, initDatabase, disconnectDatabase } from '@/db/index.js';
 import { tweets } from '@/db/schema.js';
-import { sql } from 'drizzle-orm';
+
+let container: StartedPostgreSqlContainer;
 
 beforeAll(async () => {
   process.env.NODE_ENV = 'test';
 
-  // Ensure table schema exists in test database
-  await db.execute(sql`
-    CREATE TABLE IF NOT EXISTS "tweets" (
-      "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-      "username" text NOT NULL,
-      "body" text NOT NULL,
-      "created_at" timestamp DEFAULT now() NOT NULL,
-      "updated_at" timestamp DEFAULT now() NOT NULL
-    );
-  `);
-});
+  // 1. Spin up PostgreSQL Testcontainer
+  container = await new PostgreSqlContainer('postgres:16-alpine').start();
+
+  // 2. Override database connection string environment variable dynamically
+  const connectionString = container.getConnectionUri();
+  process.env.DATABASE_URL = connectionString;
+
+  // 3. Re-initialize database client with Testcontainer connection string
+  initDatabase(connectionString);
+
+  // 4. Programmatically run Drizzle migrations to build schema inside container
+  const migrationsFolder = path.resolve(import.meta.dirname, '../../drizzle');
+  await migrate(db, { migrationsFolder });
+}, 60000);
 
 beforeEach(async () => {
   // Truncate table between tests for isolation
@@ -24,5 +31,9 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await client.end();
+  // Cleanly disconnect database client and tear down container
+  await disconnectDatabase();
+  if (container) {
+    await container.stop();
+  }
 });

@@ -1,16 +1,29 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
+import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { env } from '@/config/env.js';
 import * as schema from './schema.js';
 
 /**
- * Database Layer — Drizzle ORM Connection Instance
+ * Database Layer — Drizzle ORM Connection Instance & Dynamic Initializer
  */
-export const client = postgres(env.databaseUrl, { max: 1 });
-export const db = drizzle(client, {
-  schema,
-  logger: env.environment === 'development',
-});
+export let client: postgres.Sql;
+export let db: PostgresJsDatabase<typeof schema>;
+
+export const initDatabase = (connectionString?: string) => {
+  const url = connectionString || env.databaseUrl;
+  if (client) {
+    client.end().catch(() => {});
+  }
+  client = postgres(url, { max: 1 });
+  db = drizzle(client, {
+    schema,
+    logger: env.environment === 'development',
+  });
+  return { client, db };
+};
+
+// Initialize default instance
+initDatabase();
 
 /**
  * Database Layer — Connection Verification & Disconnection Helpers
@@ -28,6 +41,8 @@ export const connectDatabase = async (): Promise<void> => {
 };
 
 export const disconnectDatabase = async (): Promise<void> => {
-  await client.end();
-  console.log('🐘 Disconnected from PostgreSQL client');
+  if (client) {
+    await client.end();
+    console.log('🐘 Disconnected from PostgreSQL client');
+  }
 };
