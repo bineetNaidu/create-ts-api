@@ -16,6 +16,7 @@ export const AppDataSource = new DataSource({
 export const connectDatabase = async () => {
   try {
     if (!AppDataSource.isInitialized) {
+      Object.assign(AppDataSource.options, { url: env.databaseUrl });
       await AppDataSource.initialize();
       console.log('🐘 Connected to PostgreSQL via TypeORM');
     }
