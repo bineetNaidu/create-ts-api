@@ -4,6 +4,7 @@ export type TemplateId =
   | 'express-api'
   | 'express-api-mongodb'
   | 'express-api-postgres-with-drizzleorm'
+  | 'express-api-postgres-prisma'
   | 'gql'
   | 'gql-mongo'
   | 'graphql-postgres-typeorm';

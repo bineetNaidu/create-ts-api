@@ -17,6 +17,11 @@ export const TEMPLATE_OPTIONS: TemplateOption[] = [
     hint: 'Express, Drizzle ORM, Drizzle Kit, Zod, Vitest, Docker',
   },
   {
+    label: '🔼 REST API — Express + PostgreSQL (Prisma ORM)',
+    value: 'express-api-postgres-prisma',
+    hint: 'Express, Prisma ORM, Zod, Vitest, Docker',
+  },
+  {
     label: '📐 GraphQL API — Apollo Server Standard',
     value: 'gql',
     hint: 'Apollo Server, TypeGraphQL, tsx, Vitest integration tests',
