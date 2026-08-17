@@ -4,7 +4,7 @@ import type { Application } from 'express';
 import { createApp } from '../app.js';
 import '@/test/setup.js';
 
-describe('Express + Drizzle ORM PostgreSQL Tweet API Integration Tests', () => {
+describe('Express + Prisma ORM PostgreSQL Tweet API Integration Tests', () => {
   let app: Application;
 
   beforeAll(() => {
@@ -20,13 +20,13 @@ describe('Express + Drizzle ORM PostgreSQL Tweet API Integration Tests', () => {
   it('POST /api/v1/tweets should create a new tweet in PostgreSQL', async () => {
     const res = await request(app).post('/api/v1/tweets').send({
       username: 'alex',
-      body: 'Hello from Vitest + Drizzle ORM! 🐘',
+      body: 'Hello from Vitest + Prisma ORM! 🐘',
     });
 
     expect(res.status).toBe(201);
     expect(res.body.data).toMatchObject({
       username: 'alex',
-      body: 'Hello from Vitest + Drizzle ORM! 🐘',
+      body: 'Hello from Vitest + Prisma ORM! 🐘',
     });
     expect(res.body.data.id).toBeDefined();
   });

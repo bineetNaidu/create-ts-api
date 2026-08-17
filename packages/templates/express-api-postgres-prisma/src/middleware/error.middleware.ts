@@ -1,10 +1,12 @@
 import type { Request, Response, NextFunction } from 'express';
+import { Prisma } from '@prisma/client';
 import { BaseAppError } from '@/lib/errors/index.js';
 import { env } from '@/config/env.js';
+import { logger } from '@/lib/logger.js';
 
 /**
  * Express v5 Centralized Global Error Handler Middleware
- * Normalizes domain BaseAppError instances and handles raw PostgreSQL / Drizzle exceptions.
+ * Normalizes domain BaseAppError instances and handles Prisma ORM exceptions.
  */
 export const errorHandler = (
   err: unknown,
@@ -24,28 +26,60 @@ export const errorHandler = (
     return;
   }
 
-  // 2. Intercept PostgreSQL / Drizzle Native Error Codes
-  if (typeof err === 'object' && err !== null && 'code' in err) {
-    const pgCode = (err as { code?: string }).code;
+  // 2. Intercept Prisma Client Known Request Errors
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    // P2002: Unique constraint failed
+    if (err.code === 'P2002') {
+      const target = err.meta?.target;
+      const details = Array.isArray(target)
+        ? target.map((field) => ({ field: String(field), message: 'Must be unique' }))
+        : typeof target === 'string'
+          ? [{ field: target, message: 'Must be unique' }]
+          : [];
 
-    // 23505: Unique constraint violation (duplicate entry)
-    if (pgCode === '23505') {
       res.status(409).json({
         error: {
           code: 'CONFLICT',
           message: 'Resource already exists (duplicate entry)',
+          details,
+        },
+      });
+      return;
+    }
+
+    // P2025: Record not found / Operation depends on missing record
+    if (err.code === 'P2025') {
+      res.status(404).json({
+        error: {
+          code: 'NOT_FOUND',
+          message:
+            typeof err.meta?.['cause'] === 'string'
+              ? (err.meta['cause'] as string)
+              : 'Resource not found',
           details: [],
         },
       });
       return;
     }
 
-    // 22P02: Invalid UUID or text representation format
-    if (pgCode === '22P02') {
+    // P2003: Foreign key constraint failed
+    if (err.code === 'P2003') {
+      res.status(409).json({
+        error: {
+          code: 'CONFLICT',
+          message: 'Foreign key constraint violation',
+          details: [],
+        },
+      });
+      return;
+    }
+
+    // P2023: Inconsistent column data (e.g. invalid UUID format)
+    if (err.code === 'P2023') {
       res.status(400).json({
         error: {
           code: 'BAD_REQUEST',
-          message: 'Invalid resource ID format',
+          message: 'Invalid resource ID or data format',
           details: [],
         },
       });
@@ -53,8 +87,20 @@ export const errorHandler = (
     }
   }
 
-  // 3. Log non-operational unhandled errors
-  console.error('❌ Unhandled Server Error:', err);
+  // 3. Intercept Prisma Client Validation Errors
+  if (err instanceof Prisma.PrismaClientValidationError) {
+    res.status(400).json({
+      error: {
+        code: 'BAD_REQUEST',
+        message: 'Invalid database query parameters or input',
+        details: [],
+      },
+    });
+    return;
+  }
+
+  // 4. Log non-operational unhandled errors
+  logger.error(err, '❌ Unhandled Server Error');
 
   const isProduction = env.environment === 'production';
 

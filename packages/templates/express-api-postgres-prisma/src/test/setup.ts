@@ -21,7 +21,7 @@ beforeAll(async () => {
   // 4. Programmatically run Prisma db push to build schema inside container
   execSync('npm run db:push', {
     env: { ...process.env, DATABASE_URL: connectionString },
-    stdio: 'inherit',
+    stdio: 'pipe',
   });
 }, 60000);
 

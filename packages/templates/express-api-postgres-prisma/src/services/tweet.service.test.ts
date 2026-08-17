@@ -25,7 +25,7 @@ describe('TweetService Unit Tests', () => {
       const mockTweet: Tweet = {
         id: '550e8400-e29b-41d4-a716-446655440000',
         username: 'alex',
-        body: 'Hello Drizzle!',
+        body: 'Hello Prisma!',
         createdAt: new Date(),
         updatedAt: new Date(),
       };
