@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { BaseAppError } from '@/lib/errors/index.js';
 import { env } from '@/config/env.js';
+import { logger } from '@/lib/logger.js';
 
 /**
  * Express v5 Centralized Global Error Handler Middleware
@@ -23,7 +24,7 @@ export const errorHandler = (
   }
 
   // Log non-operational programmer errors
-  console.error('❌ Unhandled Server Error:', err);
+  logger.error(err, '❌ Unhandled Server Error');
 
   const isProduction = env.environment === 'production';
 

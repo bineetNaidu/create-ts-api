@@ -1,8 +1,10 @@
 import express, { type Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
+import { pinoHttp } from 'pino-http';
 
+import { logger } from '@/lib/logger.js';
+import { rateLimiter } from '@/middleware/rateLimit.middleware.js';
 import { createApiRouter } from '@/routes/index.js';
 import { errorHandler } from '@/middleware/error.middleware.js';
 import { NotFoundError } from '@/lib/errors/index.js';
@@ -13,7 +15,8 @@ export const createApp = (): Application => {
   // Global Middlewares
   app.use(helmet());
   app.use(cors());
-  app.use(morgan('dev'));
+  app.use(pinoHttp({ logger }));
+  app.use(rateLimiter);
   app.use(express.json());
 
   // Mount API V1 Router

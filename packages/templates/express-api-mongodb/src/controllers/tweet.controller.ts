@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { TweetService } from '@/services/tweet.service.js';
+import { BadRequestError } from '@/lib/errors/index.js';
 
 /**
  * Controller Layer — HTTP Delivery Layer (Constructor Dependency Injection)
@@ -15,7 +16,10 @@ export class TweetController {
 
   public getTweetById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const tweet = await this.tweetService.getTweetById(id!);
+    if (!id || typeof id !== 'string') {
+      throw new BadRequestError('Tweet ID is required');
+    }
+    const tweet = await this.tweetService.getTweetById(id);
     res.status(200).json({ data: tweet });
   };
 
@@ -26,13 +30,19 @@ export class TweetController {
 
   public updateTweet = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const tweet = await this.tweetService.updateTweet(id!, req.body);
+    if (!id || typeof id !== 'string') {
+      throw new BadRequestError('Tweet ID is required');
+    }
+    const tweet = await this.tweetService.updateTweet(id, req.body);
     res.status(200).json({ data: tweet });
   };
 
   public deleteTweet = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    await this.tweetService.deleteTweet(id!);
+    if (!id || typeof id !== 'string') {
+      throw new BadRequestError('Tweet ID is required');
+    }
+    await this.tweetService.deleteTweet(id);
     res.status(204).send();
   };
 }

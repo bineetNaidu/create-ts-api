@@ -23,7 +23,7 @@ export class TweetRepository {
       const docs = await TweetModel.find().sort({ createdAt: -1 });
       return docs.map((doc) => this.formatTweet(doc));
     } catch (error) {
-      handleMongoError(error);
+      throw handleMongoError(error);
     }
   }
 
@@ -32,7 +32,7 @@ export class TweetRepository {
       const doc = await TweetModel.findById(id);
       return doc ? this.formatTweet(doc) : null;
     } catch (error) {
-      handleMongoError(error);
+      throw handleMongoError(error);
     }
   }
 
@@ -41,7 +41,7 @@ export class TweetRepository {
       const doc = await TweetModel.create(dto);
       return this.formatTweet(doc);
     } catch (error) {
-      handleMongoError(error);
+      throw handleMongoError(error);
     }
   }
 
@@ -50,7 +50,7 @@ export class TweetRepository {
       const doc = await TweetModel.findByIdAndUpdate(id, dto, { new: true, runValidators: true });
       return doc ? this.formatTweet(doc) : null;
     } catch (error) {
-      handleMongoError(error);
+      throw handleMongoError(error);
     }
   }
 
@@ -59,7 +59,7 @@ export class TweetRepository {
       const result = await TweetModel.findByIdAndDelete(id);
       return result !== null;
     } catch (error) {
-      handleMongoError(error);
+      throw handleMongoError(error);
     }
   }
 }
