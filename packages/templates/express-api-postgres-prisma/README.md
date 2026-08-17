@@ -2,32 +2,35 @@
 
 This Express v5 + PostgreSQL REST API starter was bootstrapped with [`create-ts-api`](https://github.com/bineetNaidu/create-ts-api).
 
-It features a clean **Layered Architecture** with the **Repository Pattern**, **Express v5**, **Prisma ORM (v7)**, **Vitest**, and a global error handling middleware intercepting native PostgreSQL error codes.
+It features a clean **Layered Architecture** with the **Repository Pattern**, **Express v5**, **Prisma ORM (v7)**, **Pino & pino-http** structured logging, **express-rate-limit** security, **Vitest**, multi-stage **Docker**, and a global error handling middleware intercepting Prisma ORM exception codes.
 
 ---
 
 ## 📁 Project Architecture
 
 ```text
-prisma/
-├── schema.prisma            # Prisma ORM declarative database schema & models
-prisma.config.ts             # Prisma v7 configuration (datasource settings)
-src/
-├── config/                  # Zod-validated environment configuration (DATABASE_URL, PORT, etc.)
-├── controllers/             # Express HTTP controllers (TweetController, HealthController)
-├── db/                      # Database connectivity layer
-│   └── index.ts             # PrismaClient instantiation with pg.Pool and @prisma/adapter-pg
-├── lib/
-│   └── errors/              # Domain BaseAppError hierarchy (BadRequest, Conflict, NotFound, etc.)
-├── middleware/              # Zod schema validation & global error handler middleware
-├── repositories/            # Repository Layer (TweetRepository abstracting Prisma queries)
-├── routes/                  # Express Router factories (health.routes.ts, tweet.routes.ts)
-├── schemas/                 # Zod validation schemas (tweet.schema.ts)
-├── services/                # Pure business logic services (TweetService with constructor DI)
-├── types/                   # Shared TypeScript interface definitions (tweet.type.ts)
-├── test/                    # Isolated PostgreSQL test database setup & Vitest Supertest suite
-├── app.ts                   # Express v5 application factory & middleware composition
-└── server.ts                # Server bootstrap & graceful process shutdown
+├── Dockerfile               # Multi-stage production Docker containerization
+├── .dockerignore            # Docker build ignore patterns
+├── docker-compose.yml       # Local development PostgreSQL service
+├── prisma/
+│   └── schema.prisma        # Prisma ORM declarative database schema & models
+├── prisma.config.ts         # Prisma v7 configuration (datasource settings)
+└── src/
+    ├── config/              # Zod-validated environment configuration (DATABASE_URL, PORT, etc.)
+    ├── controllers/         # Express HTTP controllers (TweetController, HealthController)
+    ├── db/                  # Database connectivity layer (PrismaClient with @prisma/adapter-pg)
+    ├── lib/
+    │   ├── errors/          # Domain BaseAppError hierarchy (BadRequest, Conflict, NotFound, etc.)
+    │   └── logger.ts        # Centralized Pino structured logger
+    ├── middleware/          # Schema validation, rate limiting & global error handling
+    ├── repositories/        # Repository Layer (TweetRepository abstracting Prisma queries)
+    ├── routes/              # Express Router factories (health.routes.ts, tweet.routes.ts)
+    ├── schemas/             # Zod validation schemas (tweet.schema.ts)
+    ├── services/            # Pure business logic services (TweetService with constructor DI)
+    ├── types/               # Shared TypeScript interface definitions (tweet.type.ts)
+    ├── test/                # Isolated PostgreSQL test database setup & Vitest Supertest suite
+    ├── app.ts               # Express v5 application factory & middleware composition
+    └── server.ts            # Server bootstrap & graceful process shutdown
 ```
 
 ---
@@ -66,9 +69,11 @@ Executes the compiled JavaScript code from `dist/server.js`.
 
 ---
 
-## 🐳 Docker Compose
+## 🐳 Docker & Containerization
 
-Spin up a local development PostgreSQL database (`create_ts_api_express_api_psql_demo`) with a single command:
+### Development Database
+
+Spin up a local development PostgreSQL database (`create_ts_api_express_api_psql_demo`) with Docker Compose:
 
 ```bash
 docker compose up -d
@@ -76,19 +81,28 @@ docker compose up -d
 
 - **Development DB**: `postgres://postgres:postgres@localhost:5432/create_ts_api_express_api_psql_demo`
 
+### Production Docker Image
+
+Build and run the multi-stage production Docker image:
+
+```bash
+docker build -t express-api-postgres-prisma .
+docker run -p 8080:8080 -e DATABASE_URL=postgres://user:pass@host:5432/db express-api-postgres-prisma
+```
+
 ---
 
-## 🛡️ Built-in Domain Error Handling & PostgreSQL Interceptors
+## 🛡️ Built-in Security & Error Handling
 
-The template implements a structured `BaseAppError` hierarchy in `src/lib/errors/`:
-
-- `errorHandler`: Global Express middleware that intercepts native PostgreSQL / Prisma error codes and converts them into `ConflictError` / `BadRequestError` without manual repository `try/catch` boilerplate.
-- `BadRequestError` (`BAD_REQUEST` - 400)
-- `UnauthorizedError` (`UNAUTHORIZED` - 401)
-- `ForbiddenError` (`FORBIDDEN` - 403)
-- `NotFoundError` (`NOT_FOUND` - 404)
-- `ConflictError` (`CONFLICT` - 409)
-- `ValidationError` (`VALIDATION_ERROR` - 422)
+- **Pino Structured Logging**: Low-overhead structured logging via `pino` and `pino-http`, with formatted pretty output in development and JSON in production.
+- **Rate Limiting**: Integrated `express-rate-limit` middleware protecting against brute-force and DoS attacks with standard `RateLimit-*` headers.
+- **Domain Error Handling**: Global Express middleware that intercepts domain `BaseAppError` and Prisma ORM errors (`P2002` Unique Constraint, `P2025` Not Found, `P2003` Foreign Key, `P2023` Type Mismatch) without repository `try/catch` boilerplate:
+  - `BadRequestError` (`BAD_REQUEST` - 400)
+  - `UnauthorizedError` (`UNAUTHORIZED` - 401)
+  - `ForbiddenError` (`FORBIDDEN` - 403)
+  - `NotFoundError` (`NOT_FOUND` - 404)
+  - `ConflictError` (`CONFLICT` - 409)
+  - `ValidationError` (`VALIDATION_ERROR` - 422)
 
 ---
 
