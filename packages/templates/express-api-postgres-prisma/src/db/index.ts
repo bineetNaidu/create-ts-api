@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { env } from '@/config/env.js';
+import { logger } from '@/lib/logger.js';
 
 /**
  * Database Layer — Prisma ORM Connection Instance & Dynamic Initializer
@@ -38,10 +39,10 @@ export const connectDatabase = async (): Promise<void> => {
     // Execute a fast ping query to verify PostgreSQL connectivity on startup
     await prisma.$connect();
     await prisma.$queryRaw`select 1;`;
-    console.log('🐘 Connected to PostgreSQL (Prisma ORM) successfully');
+    logger.info('🐘 Connected to PostgreSQL (Prisma ORM) successfully');
   } catch (error) {
-    console.error('❌ Error connecting to PostgreSQL database:', error);
-    console.error('💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).');
+    logger.error(error, '❌ Error connecting to PostgreSQL database:');
+    logger.error('💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).');
     process.exit(1);
   }
 };
@@ -49,7 +50,7 @@ export const connectDatabase = async (): Promise<void> => {
 export const disconnectDatabase = async (): Promise<void> => {
   if (prisma) {
     await prisma.$disconnect();
-    console.log('🐘 Disconnected from Prisma client');
+    logger.info('🐘 Disconnected from Prisma client');
   }
   if (pool) {
     await pool.end();

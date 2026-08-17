@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { createApp } from './app.js';
 import { env } from '@/config/env.js';
 import { connectDatabase, disconnectDatabase } from '@/db/index.js';
+import { logger } from '@/lib/logger.js';
 
 /**
  * Composition Root & Server Entrypoint
@@ -15,16 +16,14 @@ const bootstrap = async () => {
   const app = createApp();
 
   const server = app.listen(env.port, () => {
-    console.log(
-      `🚀  Express v5 + PostgreSQL (Drizzle ORM) REST API ready at http://localhost:${env.port}/api/v1/health`,
-    );
+    logger.info(`🚀 REST API ready at http://localhost:${env.port}/api/v1/health`);
   });
 
   const gracefulShutdown = async (signal: string) => {
-    console.log(`\n⚠️  Received ${signal}. Shutting down Express server...`);
+    logger.warn(`Received ${signal}. Shutting down Express server...`);
     server.close(async () => {
       await disconnectDatabase();
-      console.log('⚡ Server closed gracefully.');
+      logger.info('⚡ Server closed gracefully.');
       process.exit(0);
     });
   };
@@ -36,6 +35,6 @@ const bootstrap = async () => {
 try {
   await bootstrap();
 } catch (error) {
-  console.error('❌ Fatal error during server startup:', error);
+  logger.error(error, '❌ Fatal error during server startup');
   process.exit(1);
 }
