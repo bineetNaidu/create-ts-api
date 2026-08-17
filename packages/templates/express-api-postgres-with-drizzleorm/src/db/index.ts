@@ -1,6 +1,7 @@
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { env } from '@/config/env.js';
+import { logger } from '@/lib/logger.js';
 import * as schema from './schema.js';
 
 /**
@@ -32,10 +33,10 @@ export const connectDatabase = async (): Promise<void> => {
   try {
     // Execute a fast ping query to verify PostgreSQL connectivity on startup
     await client`SELECT 1`;
-    console.log('🐘 Connected to PostgreSQL (Drizzle ORM) successfully');
+    logger.info('🐘 Connected to PostgreSQL (Drizzle ORM) successfully');
   } catch (error) {
-    console.error('❌ Error connecting to PostgreSQL database:', error);
-    console.error('💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).');
+    logger.error(error, '❌ Error connecting to PostgreSQL database:');
+    logger.error('💡 Make sure your PostgreSQL server is running (e.g. `docker compose up -d`).');
     process.exit(1);
   }
 };
@@ -43,6 +44,6 @@ export const connectDatabase = async (): Promise<void> => {
 export const disconnectDatabase = async (): Promise<void> => {
   if (client) {
     await client.end();
-    console.log('🐘 Disconnected from PostgreSQL client');
+    logger.info('🐘 Disconnected from PostgreSQL client');
   }
 };
