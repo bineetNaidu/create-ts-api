@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { UserService } from '@/services/user.service.js';
+import { BadRequestError } from '@/lib/errors/index.js';
 
 /**
  * Controller Layer (Constructor Dependency Injection)
@@ -15,7 +16,10 @@ export class UserController {
 
   public getUserById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const user = await this.userService.getUserById(id!);
+    if (!id || typeof id !== 'string') {
+      throw new BadRequestError('User ID is required');
+    }
+    const user = await this.userService.getUserById(id);
     res.status(200).json({ data: user });
   };
 

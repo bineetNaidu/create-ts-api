@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from '@/lib/errors/index.js';
 import type { User } from '@/types/user.type.js';
-import type { CreateUserDTO } from '@/schemas/user.schema.ts';
+import type { CreateUserDTO } from '@/schemas/user.schema.js';
 
 /**
  * Pure Business Logic Layer

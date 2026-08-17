@@ -2,26 +2,29 @@
 
 This Express v5 REST API starter was bootstrapped with [`create-ts-api`](https://github.com/bineetNaidu/create-ts-api).
 
-It features a clean **Layered N-Tier Architecture** combined with **Dependency Injection (Constructor Injection)**, **Express v5**, **Zod**, **Vitest**, and a type-safe Domain Error hierarchy (`BaseAppError`).
+It features a clean **Layered N-Tier Architecture** combined with **Dependency Injection (Constructor Injection)**, **Express v5**, **Pino & pino-http** structured logging, **express-rate-limit** security, **Zod**, **Vitest**, multi-stage **Docker**, and a type-safe Domain Error hierarchy (`BaseAppError`).
 
 ---
 
 ## 📁 Project Architecture
 
 ```text
-src/
-├── config/                  # Zod-validated environment configuration (PORT, NODE_ENV, etc.)
-├── controllers/             # Express HTTP controllers (extracts req, calls service, returns res)
-├── lib/
-│   └── errors/              # Domain BaseAppError hierarchy (BadRequest, Conflict, NotFound, etc.)
-├── middleware/              # Zod schema validation & global error handler middleware
-├── routes/                  # Express Router factories (health.routes.ts, user.routes.ts)
-├── schemas/                 # Zod validation schemas (user.schema.ts)
-├── services/                # Pure business logic services (decoupled from Express req/res)
-├── types/                   # Shared TypeScript interfaces & types
-├── test/                    # Vitest + Supertest integration test suite
-├── app.ts                   # Express v5 application factory & middleware composition
-└── server.ts                # Server bootstrap & graceful shutdown
+├── Dockerfile               # Multi-stage production Docker containerization
+├── .dockerignore            # Docker build ignore patterns
+└── src/
+    ├── config/              # Zod-validated environment configuration (PORT, NODE_ENV, etc.)
+    ├── controllers/         # Express HTTP controllers (extracts req, calls service, returns res)
+    ├── lib/
+    │   ├── errors/          # Domain BaseAppError hierarchy (BadRequest, Conflict, NotFound, etc.)
+    │   └── logger.ts        # Centralized Pino structured logger
+    ├── middleware/          # Schema validation, rate limiting & global error handling
+    ├── routes/              # Express Router factories (health.routes.ts, user.routes.ts)
+    ├── schemas/             # Zod validation schemas (user.schema.ts)
+    ├── services/            # Pure business logic services (decoupled from Express req/res)
+    ├── types/               # Shared TypeScript interfaces & types
+    ├── test/                # Vitest + Supertest integration test suite
+    ├── app.ts               # Express v5 application factory & middleware composition
+    └── server.ts            # Server bootstrap & graceful shutdown
 ```
 
 ---
@@ -52,17 +55,29 @@ Executes the compiled JavaScript code from `dist/server.js`.
 
 ---
 
-## 🛡️ Built-in Domain Error Handling
+## 🐳 Docker & Containerization
 
-The template implements a structured `BaseAppError` hierarchy in `src/lib/errors/`:
+Build and run the multi-stage production Docker image:
 
-- `BadRequestError` (`BAD_REQUEST` - 400)
-- `UnauthorizedError` (`UNAUTHORIZED` - 401)
-- `ForbiddenError` (`FORBIDDEN` - 403)
-- `NotFoundError` (`NOT_FOUND` - 404)
-- `ConflictError` (`CONFLICT` - 409)
-- `ValidationError` (`VALIDATION_ERROR` - 422)
-- `InternalError` (`INTERNAL_ERROR` - 500)
+```bash
+docker build -t express-api .
+docker run -p 8080:8080 express-api
+```
+
+---
+
+## 🛡️ Built-in Security & Domain Error Handling
+
+- **Pino Structured Logging**: Low-overhead structured logging via `pino` and `pino-http`, with formatted pretty output in development, sensitive header/password redaction, and structured JSON in production.
+- **Rate Limiting**: Integrated `express-rate-limit` middleware protecting endpoints against brute-force and DoS attacks with standard `RateLimit-*` headers.
+- **Domain Error Handling**: The template implements a structured `BaseAppError` hierarchy in `src/lib/errors/`:
+  - `BadRequestError` (`BAD_REQUEST` - 400)
+  - `UnauthorizedError` (`UNAUTHORIZED` - 401)
+  - `ForbiddenError` (`FORBIDDEN` - 403)
+  - `NotFoundError` (`NOT_FOUND` - 404)
+  - `ConflictError` (`CONFLICT` - 409)
+  - `ValidationError` (`VALIDATION_ERROR` - 422)
+  - `InternalError` (`INTERNAL_ERROR` - 500)
 
 ### Example Usage in Services:
 
