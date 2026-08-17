@@ -1,6 +1,6 @@
 {
   "name": "create-ts-api",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Interactive CLI tool to instantly scaffold production-grade Node.js TypeScript APIs in seconds",
   "keywords": [
     "api",
